@@ -1,0 +1,58 @@
+import type { ReplacementPart } from "./types"
+
+export const mockParts: ReplacementPart[] = [
+  {
+    id: "part-hydraulic-filter",
+    title: "Hydraulic Filter",
+    partNumber: "HF-100",
+    category: "Hydraulics",
+    description: "Spin-on filter for lift and steering systems",
+    availability: "Available",
+    unitCost: 47.5,
+  },
+  {
+    id: "part-battery-pack",
+    title: "24V Battery Pack",
+    partNumber: "BP-24V",
+    category: "Electrical",
+    description: "Replacement battery pack for field control units",
+    availability: "Available",
+    unitCost: 312,
+  },
+  {
+    id: "part-control-valve",
+    title: "Control Valve",
+    partNumber: "CV-220",
+    category: "Hydraulics",
+    description: "Two-way valve for hydraulic control blocks",
+    availability: "Out of Stock",
+    unitCost: 128,
+  },
+  {
+    id: "part-track-pad",
+    title: "Rubber Track Pad",
+    partNumber: "TP-450",
+    category: "Undercarriage",
+    description: "Bolt-on pad for compact tracked equipment",
+    availability: "Available",
+    unitCost: 86.25,
+  },
+  {
+    id: "part-led-work-light",
+    title: "LED Work Light",
+    partNumber: "WL-18",
+    category: "Lighting",
+    description: "Sealed 18W work light with mounting bracket",
+    availability: "Available",
+    unitCost: 54.99,
+  },
+  {
+    id: "part-seat-switch",
+    title: "Seat Safety Switch",
+    partNumber: "SS-75",
+    category: "Safety",
+    description: "Operator presence switch for replacement seats",
+    availability: "Available",
+    unitCost: 39.75,
+  },
+]
