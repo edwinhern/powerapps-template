@@ -1,0 +1,68 @@
+lockfile_version: '1'
+generated_at: '2026-05-22T05:36:15.339203+00:00'
+apm_version: 0.14.1
+dependencies:
+- repo_url: anthropics/claude-code
+  host: github.com
+  resolved_commit: 2194e8e0904087b9f2afce41a2ec083cc71c0653
+  resolved_ref: 2194e8e0904087b9f2afce41a2ec083cc71c0653
+  virtual_path: plugins/frontend-design/skills/frontend-design
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .claude/skills/frontend-design
+  content_hash: sha256:e8118284a6365753790d44bb2758a6032b3af27fa84696428d9233f2be0f4e78
+- repo_url: microsoft/power-platform-skills
+  host: github.com
+  resolved_commit: fc01b43e5d6435b17708dd7e6c2701fb6571fe9a
+  resolved_ref: fc01b43e5d6435b17708dd7e6c2701fb6571fe9a
+  virtual_path: plugins/code-apps
+  is_virtual: true
+  package_type: marketplace_plugin
+  deployed_files:
+  - .claude/agents/code-app-architect.md
+  - .claude/skills/add-azuredevops
+  - .claude/skills/add-connector
+  - .claude/skills/add-datasource
+  - .claude/skills/add-dataverse
+  - .claude/skills/add-excel
+  - .claude/skills/add-mcscopilot
+  - .claude/skills/add-office365
+  - .claude/skills/add-onedrive
+  - .claude/skills/add-sharepoint
+  - .claude/skills/add-teams
+  - .claude/skills/create-code-app
+  - .claude/skills/deploy
+  - .claude/skills/list-connections
+  - .claude/skills/report-issue
+  deployed_file_hashes:
+    .claude/agents/code-app-architect.md: sha256:cc904de4443930b827ecf8c70f40aa64e033f3003f9f2d7b345b7d5c8748d196
+  content_hash: sha256:ee2562db874944a4ef1478974af1925e1479ec10da2b6f8f4e6a5e46e18ffc3f
+- repo_url: microsoft/power-platform-skills
+  host: github.com
+  resolved_commit: fc01b43e5d6435b17708dd7e6c2701fb6571fe9a
+  resolved_ref: fc01b43e5d6435b17708dd7e6c2701fb6571fe9a
+  virtual_path: plugins/model-apps
+  is_virtual: true
+  package_type: marketplace_plugin
+  deployed_files:
+  - .claude/agents/genpage-edit-planner.md
+  - .claude/agents/genpage-entity-builder.md
+  - .claude/agents/genpage-page-builder.md
+  - .claude/agents/genpage-planner.md
+  - .claude/skills/genpage
+  - .claude/skills/report-issue
+  deployed_file_hashes:
+    .claude/agents/genpage-edit-planner.md: sha256:6f3ebe521b52f28e9bb85acdfe32ad63a9a90088764ab32051a3ca550fa4704f
+    .claude/agents/genpage-entity-builder.md: sha256:d098cf9b4be89ce8f75db673455a668e6049e2d635449e1806f053ac8619b16c
+    .claude/agents/genpage-page-builder.md: sha256:da0c4a4fa4df21cb646d59ca41ad34e1edda2e66352920bc8ccff3c9db90d0e0
+    .claude/agents/genpage-planner.md: sha256:806aef09e59e4ea3142190e3b8d16ec6f1b12f161f25703b8ab359147a0571c7
+  content_hash: sha256:b296cb5bff2e6e6fdee2b7f0a438dbb2813bdfc0bf58d99a76cc99db9a5324ef
+mcp_servers:
+- grep
+mcp_configs:
+  grep:
+    name: grep
+    transport: http
+    registry: false
+    url: https://mcp.grep.app

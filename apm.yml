@@ -1,0 +1,19 @@
+name: power-apps
+version: 1.0.0
+description: Claude Code agent tooling for the field equipment parts Power Apps app
+author: Edwin Hernandez
+targets:
+  - claude
+
+dependencies:
+  apm:
+    - microsoft/power-platform-skills/plugins/code-apps#fc01b43e5d6435b17708dd7e6c2701fb6571fe9a
+    - microsoft/power-platform-skills/plugins/model-apps#fc01b43e5d6435b17708dd7e6c2701fb6571fe9a
+    - anthropics/claude-code/plugins/frontend-design/skills/frontend-design#2194e8e0904087b9f2afce41a2ec083cc71c0653
+  mcp:
+    - name: grep
+      registry: false
+      transport: http
+      url: https://mcp.grep.app
+includes: auto
+scripts: {}
