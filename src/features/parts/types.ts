@@ -8,6 +8,7 @@ export type ReplacementPart = {
   description: string
   availability: PartAvailability
   unitCost: number
+  imageUrl?: string
 }
 
 export type CartItem = {

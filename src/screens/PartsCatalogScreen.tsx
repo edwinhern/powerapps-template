@@ -1,108 +1,229 @@
-import { Search, ShoppingCart } from "lucide-react"
-import { useState } from "react"
+import { Minus, Package, Plus, Search, ShoppingCart } from "lucide-react"
+import { useMemo, useState } from "react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { filterParts } from "@/features/parts/catalog"
+import { useCartStore } from "@/features/parts/cart-store"
+import { mockParts } from "@/features/parts/mock-parts"
 import type { ReplacementPart } from "@/features/parts/types"
 import { formatCurrency } from "@/lib/format"
 
-type PartsCatalogScreenProps = {
-  parts: ReplacementPart[]
-  cartCount: number
-  onAddPart: (part: ReplacementPart) => void
-}
+const ALL_CATEGORIES = "All Categories"
 
-export function PartsCatalogScreen({
-  parts,
-  cartCount,
-  onAddPart,
-}: PartsCatalogScreenProps) {
+export function PartsCatalogScreen() {
   const [searchTerm, setSearchTerm] = useState("")
-  const filteredParts = filterParts(parts, searchTerm)
+  const [category, setCategory] = useState<string>(ALL_CATEGORIES)
+  const addItem = useCartStore((state) => state.addItem)
+
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(mockParts.map((part) => part.category)))
+    return [ALL_CATEGORIES, ...unique.sort()]
+  }, [])
+
+  const filteredParts = useMemo(() => {
+    const searched = filterParts(mockParts, searchTerm)
+    if (category === ALL_CATEGORIES) {
+      return searched
+    }
+    return searched.filter((part) => part.category === category)
+  }, [searchTerm, category])
 
   return (
-    <section className="space-y-5 pb-28">
-      <div className="rounded-b-[2rem] bg-slate-950 px-5 pb-6 pt-8 text-white shadow-lg">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-sm font-medium text-cyan-200">Field parts desk</p>
-            <h1 className="mt-2 text-3xl font-bold tracking-tight">Replacement parts</h1>
-            <p className="mt-2 max-w-xl text-sm text-slate-300">
-              Search the crew catalog, confirm stock, and add what the job needs.
-            </p>
-          </div>
-          <Badge className="gap-1 rounded-full bg-cyan-400 px-3 py-1 text-slate-950 hover:bg-cyan-400">
-            <ShoppingCart className="size-3.5" />
-            {cartCount}
-          </Badge>
-        </div>
+    <section className="space-y-6 px-4 pt-6 pb-24 sm:px-6 lg:px-8 lg:pb-10">
+      <div className="space-y-1">
+        <p className="text-muted-foreground text-sm font-medium">
+          Field parts desk
+        </p>
+        <h1 className="text-3xl font-bold tracking-tight">Replacement parts</h1>
+        <p className="text-muted-foreground max-w-2xl text-sm">
+          Search the crew catalog, confirm stock, and add what the job needs.
+        </p>
       </div>
 
-      <div className="px-4 sm:px-6">
-        <label className="text-sm font-medium" htmlFor="parts-search">
-          Search parts
-        </label>
-        <div className="relative mt-2">
-          <Search className="pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" />
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="relative flex-1">
+          <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2" />
           <Input
             id="parts-search"
             aria-label="Search parts"
-            className="h-12 rounded-2xl pl-10 text-base"
-            placeholder="Name, part number, or category"
+            className="bg-card h-12 rounded-2xl pl-10 text-base"
+            placeholder="Search parts, numbers, or categories..."
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
           />
         </div>
+        <Select value={category} onValueChange={setCategory}>
+          <SelectTrigger
+            aria-label="Filter by category"
+            className="bg-card !h-12 rounded-2xl px-4 text-base sm:w-56"
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {categories.map((option) => (
+              <SelectItem key={option} value={option}>
+                {option}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
-      <div className="grid gap-4 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
-        {filteredParts.map((part) => {
-          const isAvailable = part.availability === "Available"
-
-          return (
-            <Card key={part.id} className="overflow-hidden border-slate-200/80 py-0 shadow-md">
-              <CardHeader className="gap-3 bg-slate-50 px-5 py-5">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <CardTitle className="text-xl leading-tight">{part.title}</CardTitle>
-                    <CardDescription className="mt-1 font-mono text-sm">
-                      {part.partNumber}
-                    </CardDescription>
-                  </div>
-                  <Badge variant={isAvailable ? "default" : "secondary"}>
-                    {part.availability}
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4 px-5 py-5">
-                <p className="text-sm text-muted-foreground">{part.description}</p>
-                <div className="flex items-center justify-between gap-3 text-sm">
-                  <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">
-                    {part.category}
-                  </span>
-                  <span className="text-lg font-semibold">{formatCurrency(part.unitCost)}</span>
-                </div>
-                <Button
-                  className="h-12 w-full rounded-2xl text-base"
-                  disabled={!isAvailable}
-                  onClick={() => onAddPart(part)}
-                >
-                  {isAvailable ? `Add ${part.title}` : "Out of stock"}
-                </Button>
-              </CardContent>
-            </Card>
-          )
-        })}
-      </div>
+      {filteredParts.length === 0 ? (
+        <div className="bg-card rounded-2xl border border-dashed px-6 py-12 text-center">
+          <p className="text-lg font-semibold">No parts match your search</p>
+          <p className="text-muted-foreground mt-2 text-sm">
+            Try a different keyword or clear the category filter.
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {filteredParts.map((part) => (
+            <PartCard
+              key={part.id}
+              part={part}
+              onAdd={(quantity) => addItem(part, quantity)}
+            />
+          ))}
+        </div>
+      )}
     </section>
+  )
+}
+
+type PartCardProps = {
+  part: ReplacementPart
+  onAdd: (quantity: number) => void
+}
+
+function PartCard({ part, onAdd }: PartCardProps) {
+  const [quantity, setQuantity] = useState(1)
+  const isAvailable = part.availability === "Available"
+
+  function handleAdd() {
+    onAdd(quantity)
+    setQuantity(1)
+  }
+
+  return (
+    <article className="bg-card border-border/60 flex flex-col rounded-2xl border p-4 shadow-sm transition-shadow hover:shadow-md">
+      <div className="flex gap-4">
+        <div className="bg-muted relative size-24 shrink-0 overflow-hidden rounded-xl">
+          {part.imageUrl ? (
+            <img
+              src={part.imageUrl}
+              alt={part.title}
+              loading="lazy"
+              className="size-full object-cover"
+            />
+          ) : (
+            <div className="text-muted-foreground grid size-full place-items-center">
+              <Package className="size-8" />
+            </div>
+          )}
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-2">
+            <h2 className="text-base leading-tight font-semibold">
+              {part.title}
+            </h2>
+            <AvailabilityBadge availability={part.availability} />
+          </div>
+          <p className="text-muted-foreground mt-1 font-mono text-xs">
+            {part.partNumber}
+          </p>
+          <p className="text-muted-foreground mt-2 line-clamp-2 text-sm">
+            {part.description}
+          </p>
+          <div className="mt-3 flex items-center gap-3">
+            <Badge variant="outline" className="rounded-full">
+              {part.category}
+            </Badge>
+            <span className="text-base font-semibold">
+              {formatCurrency(part.unitCost)}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <hr className="border-border/60 my-4" />
+
+      <div className="flex items-center justify-between gap-3">
+        {isAvailable ? (
+          <>
+            <div className="bg-muted inline-flex items-center gap-1 rounded-full p-1">
+              <button
+                type="button"
+                aria-label={`Decrease ${part.title} quantity`}
+                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                className="hover:bg-background grid size-8 place-items-center rounded-full transition-colors"
+              >
+                <Minus className="size-4" />
+              </button>
+              <span className="w-6 text-center text-sm font-semibold">
+                {quantity}
+              </span>
+              <button
+                type="button"
+                aria-label={`Increase ${part.title} quantity`}
+                onClick={() => setQuantity((q) => q + 1)}
+                className="hover:bg-background grid size-8 place-items-center rounded-full transition-colors"
+              >
+                <Plus className="size-4" />
+              </button>
+            </div>
+            <Button
+              size="field"
+              aria-label={`Add ${part.title}`}
+              onClick={handleAdd}
+              className="flex-1"
+            >
+              <ShoppingCart className="size-4" />
+              Add to Cart
+            </Button>
+          </>
+        ) : (
+          <Button
+            size="field"
+            variant="secondary"
+            disabled
+            aria-label="Out of stock"
+            className="w-full"
+          >
+            Out of stock
+          </Button>
+        )}
+      </div>
+    </article>
+  )
+}
+
+function AvailabilityBadge({
+  availability,
+}: {
+  availability: ReplacementPart["availability"]
+}) {
+  if (availability === "Available") {
+    return (
+      <Badge variant="success" className="gap-1.5 rounded-full px-2.5">
+        <span className="bg-success size-1.5 rounded-full" />
+        Available
+      </Badge>
+    )
+  }
+  return (
+    <Badge variant="destructive" className="gap-1.5 rounded-full px-2.5">
+      <span className="bg-white/90 size-1.5 rounded-full" />
+      Out of Stock
+    </Badge>
   )
 }

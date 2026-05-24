@@ -1,7 +1,15 @@
 import { fireEvent, render, screen } from "@testing-library/react"
+import { beforeEach } from "vitest"
+
+import { useCartStore } from "@/features/parts/cart-store"
 import { AppShell } from "./AppShell"
 
 describe("AppShell", () => {
+  beforeEach(() => {
+    globalThis.localStorage.clear()
+    useCartStore.getState().reset()
+  })
+
   it("searches by part number and keeps out of stock parts unavailable", () => {
     render(<AppShell now={() => new Date("2026-05-21T15:30:00.000Z")} />)
 
