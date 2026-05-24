@@ -25,7 +25,7 @@ export function SiteHeader() {
           onClick={() => setActiveScreen("catalog")}
           className="flex items-center gap-2 text-left"
         >
-          <span className="bg-primary text-primary-foreground grid size-9 place-items-center rounded-xl">
+          <span className="bg-primary text-primary-foreground grid size-9 place-items-center rounded-lg">
             <Package className="size-5" />
           </span>
           <span className="text-base font-semibold tracking-tight sm:text-lg">
@@ -82,9 +82,9 @@ function HeaderLink({ label, active, onClick }: HeaderLinkProps) {
       onClick={onClick}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+        "rounded-md px-3 py-2 text-sm font-medium transition-colors",
         active
-          ? "bg-primary text-primary-foreground"
+          ? "bg-accent text-accent-foreground"
           : "text-muted-foreground hover:text-foreground hover:bg-muted",
       )}
     >

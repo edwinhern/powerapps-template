@@ -82,7 +82,7 @@ export function CartDrawer({
               {items.map((item) => (
                 <li
                   key={item.part.id}
-                  className="bg-card rounded-2xl border p-4"
+                  className="bg-card rounded-lg border p-4"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">

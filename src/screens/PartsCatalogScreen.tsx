@@ -39,23 +39,22 @@ export function PartsCatalogScreen() {
 
   return (
     <section className="space-y-6 px-4 pt-6 pb-24 sm:px-6 lg:px-8 lg:pb-10">
-      <div className="space-y-1">
-        <p className="text-muted-foreground text-sm font-medium">
-          Field parts desk
-        </p>
-        <h1 className="text-3xl font-bold tracking-tight">Replacement parts</h1>
+      <div className="space-y-2">
+        <h1 className="text-3xl font-semibold tracking-tight">
+          Replacement parts
+        </h1>
         <p className="text-muted-foreground max-w-2xl text-sm">
-          Search the crew catalog, confirm stock, and add what the job needs.
+          Search the catalog and add what the job needs.
         </p>
       </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-2 sm:flex-row">
         <div className="relative flex-1">
           <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2" />
           <Input
             id="parts-search"
             aria-label="Search parts"
-            className="bg-card h-12 rounded-2xl pl-10 text-base"
+            className="bg-card h-11 rounded-lg pl-10"
             placeholder="Search parts, numbers, or categories..."
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
@@ -64,7 +63,7 @@ export function PartsCatalogScreen() {
         <Select value={category} onValueChange={setCategory}>
           <SelectTrigger
             aria-label="Filter by category"
-            className="bg-card !h-12 rounded-2xl px-4 text-base sm:w-56"
+            className="bg-card !h-11 rounded-lg px-4 sm:w-56"
           >
             <SelectValue />
           </SelectTrigger>
@@ -115,21 +114,10 @@ function PartCard({ part, onAdd }: PartCardProps) {
   }
 
   return (
-    <article className="bg-card border-border/60 flex flex-col rounded-2xl border p-4 shadow-sm transition-shadow hover:shadow-md">
+    <article className="bg-card border-border/60 group flex flex-col rounded-xl border p-4 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex gap-4">
-        <div className="bg-muted relative size-24 shrink-0 overflow-hidden rounded-xl">
-          {part.imageUrl ? (
-            <img
-              src={part.imageUrl}
-              alt={part.title}
-              loading="lazy"
-              className="size-full object-cover"
-            />
-          ) : (
-            <div className="text-muted-foreground grid size-full place-items-center">
-              <Package className="size-8" />
-            </div>
-          )}
+        <div className="bg-accent text-brand grid size-20 shrink-0 place-items-center rounded-lg">
+          <Package className="size-8" />
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
@@ -145,7 +133,7 @@ function PartCard({ part, onAdd }: PartCardProps) {
             {part.description}
           </p>
           <div className="mt-3 flex items-center gap-3">
-            <Badge variant="outline" className="rounded-full">
+            <Badge variant="outline" className="rounded-md">
               {part.category}
             </Badge>
             <span className="text-base font-semibold">
@@ -160,23 +148,23 @@ function PartCard({ part, onAdd }: PartCardProps) {
       <div className="flex items-center justify-between gap-3">
         {isAvailable ? (
           <>
-            <div className="bg-muted inline-flex items-center gap-1 rounded-full p-1">
+            <div className="bg-muted inline-flex items-center gap-1 rounded-lg p-1">
               <button
                 type="button"
                 aria-label={`Decrease ${part.title} quantity`}
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="hover:bg-background grid size-8 place-items-center rounded-full transition-colors"
+                className="hover:bg-background grid size-7 place-items-center rounded-md transition-colors"
               >
                 <Minus className="size-4" />
               </button>
-              <span className="w-6 text-center text-sm font-semibold">
+              <span className="w-6 text-center text-sm font-semibold tabular-nums">
                 {quantity}
               </span>
               <button
                 type="button"
                 aria-label={`Increase ${part.title} quantity`}
                 onClick={() => setQuantity((q) => q + 1)}
-                className="hover:bg-background grid size-8 place-items-center rounded-full transition-colors"
+                className="hover:bg-background grid size-7 place-items-center rounded-md transition-colors"
               >
                 <Plus className="size-4" />
               </button>
@@ -214,16 +202,16 @@ function AvailabilityBadge({
 }) {
   if (availability === "Available") {
     return (
-      <Badge variant="success" className="gap-1.5 rounded-full px-2.5">
+      <span className="bg-success/10 text-success inline-flex items-center gap-1.5 rounded-md border border-transparent px-2 py-0.5 text-xs font-medium">
         <span className="bg-success size-1.5 rounded-full" />
         Available
-      </Badge>
+      </span>
     )
   }
   return (
-    <Badge variant="destructive" className="gap-1.5 rounded-full px-2.5">
-      <span className="bg-white/90 size-1.5 rounded-full" />
+    <span className="bg-destructive/10 text-destructive inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-medium">
+      <span className="bg-destructive size-1.5 rounded-full" />
       Out of Stock
-    </Badge>
+    </span>
   )
 }

@@ -77,7 +77,7 @@ function NavButton({ active, icon, label, onClick }: NavButtonProps) {
     <Button
       aria-pressed={active}
       className={cn(
-        "h-14 flex-col gap-1 rounded-2xl text-xs",
+        "h-14 flex-col gap-1 rounded-lg text-xs",
         active && "bg-primary text-primary-foreground",
       )}
       variant={active ? "default" : "ghost"}

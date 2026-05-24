@@ -84,7 +84,7 @@ export function CartScreen({
                 </div>
               </CardHeader>
               <CardContent className="space-y-4 px-5 pb-5">
-                <div className="bg-muted flex items-center justify-between rounded-2xl p-2">
+                <div className="bg-muted flex items-center justify-between rounded-lg p-2">
                   <div className="flex items-center gap-1">
                     <Button
                       aria-label={`Decrease ${item.part.title}`}

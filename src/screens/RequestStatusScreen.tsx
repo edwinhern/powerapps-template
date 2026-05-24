@@ -74,7 +74,7 @@ export function RequestStatusScreen() {
                   {request.requestedParts.map((part) => (
                     <li
                       key={`${request.id}-${part.partNumber}`}
-                      className="bg-muted flex items-start justify-between gap-3 rounded-2xl p-3 text-sm"
+                      className="bg-muted flex items-start justify-between gap-3 rounded-lg p-3 text-sm"
                     >
                       <div>
                         <p className="font-medium">
@@ -99,7 +99,7 @@ export function RequestStatusScreen() {
                   </span>
                 </div>
                 {request.approverComments ? (
-                  <p className="bg-muted text-muted-foreground rounded-2xl p-3 text-sm">
+                  <p className="bg-muted text-muted-foreground rounded-lg p-3 text-sm">
                     {request.approverComments}
                   </p>
                 ) : null}

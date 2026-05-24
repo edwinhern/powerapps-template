@@ -9,8 +9,6 @@ export const mockParts: ReplacementPart[] = [
     description: "Spin-on filter for lift and steering systems",
     availability: "Available",
     unitCost: 47.5,
-    imageUrl:
-      "https://images.unsplash.com/photo-1635784063388-a5b86b1da97a?w=400&q=80&auto=format&fit=crop",
   },
   {
     id: "part-battery-pack",
@@ -20,8 +18,6 @@ export const mockParts: ReplacementPart[] = [
     description: "Replacement battery pack for field control units",
     availability: "Available",
     unitCost: 312,
-    imageUrl:
-      "https://images.unsplash.com/photo-1620813732660-49bd9528a8a2?w=400&q=80&auto=format&fit=crop",
   },
   {
     id: "part-control-valve",
@@ -31,8 +27,6 @@ export const mockParts: ReplacementPart[] = [
     description: "Two-way valve for hydraulic control blocks",
     availability: "Out of Stock",
     unitCost: 128,
-    imageUrl:
-      "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=400&q=80&auto=format&fit=crop",
   },
   {
     id: "part-track-pad",
@@ -42,8 +36,6 @@ export const mockParts: ReplacementPart[] = [
     description: "Bolt-on pad for compact tracked equipment",
     availability: "Available",
     unitCost: 86.25,
-    imageUrl:
-      "https://images.unsplash.com/photo-1597149961419-77f96585fbef?w=400&q=80&auto=format&fit=crop",
   },
   {
     id: "part-led-work-light",
@@ -53,8 +45,6 @@ export const mockParts: ReplacementPart[] = [
     description: "Sealed 18W work light with mounting bracket",
     availability: "Available",
     unitCost: 54.99,
-    imageUrl:
-      "https://images.unsplash.com/photo-1565616424884-9a82fbdec5ba?w=400&q=80&auto=format&fit=crop",
   },
   {
     id: "part-seat-switch",
@@ -64,7 +54,5 @@ export const mockParts: ReplacementPart[] = [
     description: "Operator presence switch for replacement seats",
     availability: "Available",
     unitCost: 39.75,
-    imageUrl:
-      "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&q=80&auto=format&fit=crop",
   },
 ]
