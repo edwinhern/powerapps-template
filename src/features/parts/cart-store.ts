@@ -12,12 +12,9 @@ import type { CartItem, ReplacementPart } from "@/features/parts/types"
 import { createEquipmentRequest } from "@/features/requests/request-store"
 import type { EquipmentRequest, Requestor } from "@/features/requests/types"
 
-export type ActiveScreen = "catalog" | "status"
-
 type CartState = {
   items: CartItem[]
   requests: EquipmentRequest[]
-  activeScreen: ActiveScreen
   isCartOpen: boolean
 }
 
@@ -28,7 +25,6 @@ type CartActions = {
   clearCart: () => void
   openCart: () => void
   closeCart: () => void
-  setActiveScreen: (screen: ActiveScreen) => void
   submitRequest: (input: {
     requestor: Requestor
     submittedAt: Date
@@ -41,7 +37,6 @@ export type CartStore = CartState & CartActions
 const initialState: CartState = {
   items: [],
   requests: [],
-  activeScreen: "catalog",
   isCartOpen: false,
 }
 
@@ -74,9 +69,6 @@ export const useCartStore = create<CartStore>()(
 
       closeCart: () => set({ isCartOpen: false }),
 
-      setActiveScreen: (screen) =>
-        set({ activeScreen: screen, isCartOpen: false }),
-
       submitRequest: ({ requestor, submittedAt }) => {
         const state = get()
         if (state.items.length === 0) {
@@ -91,7 +83,6 @@ export const useCartStore = create<CartStore>()(
         set({
           requests: [request, ...state.requests],
           items: [],
-          activeScreen: "status",
           isCartOpen: false,
         })
         return request
@@ -137,7 +128,5 @@ export const useCartTotal = () =>
   useCartStore((state) => getCartTotal(state.items))
 
 export const useIsCartOpen = () => useCartStore((state) => state.isCartOpen)
-
-export const useActiveScreen = () => useCartStore((state) => state.activeScreen)
 
 export const useRequests = () => useCartStore((state) => state.requests)

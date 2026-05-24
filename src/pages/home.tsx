@@ -1,5 +1,5 @@
-import { AppShell } from "@/app/AppShell"
+import { PartsCatalogScreen } from "@/screens/PartsCatalogScreen"
 
 export default function HomePage() {
-  return <AppShell />
+  return <PartsCatalogScreen />
 }

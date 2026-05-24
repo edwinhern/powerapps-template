@@ -1,4 +1,5 @@
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 import { EmptyState } from "@/components/empty-state"
 import { Button } from "@/components/ui/button"
@@ -30,6 +31,7 @@ export function CartDrawer({
   requestor,
   now = () => new Date(),
 }: CartDrawerProps) {
+  const navigate = useNavigate()
   const isOpen = useIsCartOpen()
   const items = useCartItems()
   const total = useCartTotal()
@@ -38,13 +40,17 @@ export function CartDrawer({
   const removeItem = useCartStore((state) => state.removeItem)
   const closeCart = useCartStore((state) => state.closeCart)
   const submitRequest = useCartStore((state) => state.submitRequest)
-  const setActiveScreen = useCartStore((state) => state.setActiveScreen)
 
   function handleSubmit() {
     const request = submitRequest({ requestor, submittedAt: now() })
     if (request) {
-      setActiveScreen("status")
+      navigate("/requests")
     }
+  }
+
+  function handleBrowseParts() {
+    closeCart()
+    navigate("/")
   }
 
   return (
@@ -69,10 +75,7 @@ export function CartDrawer({
               title="Cart is empty"
               description="Browse the catalog and add available parts to start a request."
               action={
-                <Button
-                  variant="outline"
-                  onClick={() => setActiveScreen("catalog")}
-                >
+                <Button variant="outline" onClick={handleBrowseParts}>
                   Browse parts
                 </Button>
               }

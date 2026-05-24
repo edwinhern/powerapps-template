@@ -1,17 +1,41 @@
 import { act, fireEvent, render, screen } from "@testing-library/react"
+import { MemoryRouter, Route, Routes } from "react-router-dom"
 import { beforeEach } from "vitest"
 
+import { CartDrawer } from "@/components/cart-drawer"
 import { useCartStore } from "@/features/parts/cart-store"
-import { AppShell } from "./AppShell"
+import type { Requestor } from "@/features/requests/types"
+import HomePage from "@/pages/home"
+import RequestsPage from "@/pages/requests"
 
-describe("AppShell", () => {
+const testRequestor: Requestor = {
+  name: "Field Crew User",
+  email: "field.crew@example.com",
+}
+
+function renderApp() {
+  return render(
+    <MemoryRouter initialEntries={["/"]}>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/requests" element={<RequestsPage />} />
+      </Routes>
+      <CartDrawer
+        requestor={testRequestor}
+        now={() => new Date("2026-05-21T15:30:00.000Z")}
+      />
+    </MemoryRouter>,
+  )
+}
+
+describe("Parts app", () => {
   beforeEach(() => {
     globalThis.localStorage.clear()
     useCartStore.getState().reset()
   })
 
   it("searches by part number and keeps out of stock parts unavailable", () => {
-    render(<AppShell now={() => new Date("2026-05-21T15:30:00.000Z")} />)
+    renderApp()
 
     fireEvent.change(screen.getByLabelText("Search parts"), {
       target: { value: "CV-220" },
@@ -23,7 +47,7 @@ describe("AppShell", () => {
   })
 
   it("submits cart items via the drawer and shows the pending request", () => {
-    render(<AppShell now={() => new Date("2026-05-21T15:30:00.000Z")} />)
+    renderApp()
 
     fireEvent.click(screen.getByRole("button", { name: "Add Hydraulic Filter" }))
     act(() => {
