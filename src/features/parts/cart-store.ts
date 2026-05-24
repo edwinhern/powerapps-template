@@ -12,7 +12,7 @@ import type { CartItem, ReplacementPart } from "@/features/parts/types"
 import { createEquipmentRequest } from "@/features/requests/request-store"
 import type { EquipmentRequest, Requestor } from "@/features/requests/types"
 
-export type ActiveScreen = "catalog" | "cart" | "status"
+export type ActiveScreen = "catalog" | "status"
 
 type CartState = {
   items: CartItem[]

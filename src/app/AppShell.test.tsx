@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { act, fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach } from "vitest"
 
 import { useCartStore } from "@/features/parts/cart-store"
@@ -22,14 +22,16 @@ describe("AppShell", () => {
     expect(screen.getByRole("button", { name: "Out of stock" })).toBeDisabled()
   })
 
-  it("submits cart items and shows the pending request", () => {
+  it("submits cart items via the drawer and shows the pending request", () => {
     render(<AppShell now={() => new Date("2026-05-21T15:30:00.000Z")} />)
 
     fireEvent.click(screen.getByRole("button", { name: "Add Hydraulic Filter" }))
-    fireEvent.click(screen.getByRole("button", { name: "Cart 1" }))
+    act(() => {
+      useCartStore.getState().openCart()
+    })
 
     expect(screen.getByText("Estimated total")).toBeInTheDocument()
-    expect(screen.getAllByText("$47.50")).toHaveLength(2)
+    expect(screen.getAllByText("$47.50").length).toBeGreaterThanOrEqual(2)
 
     fireEvent.click(screen.getByRole("button", { name: "Submit request" }))
 

@@ -1,4 +1,16 @@
-import { Minus, Package, Plus, Search, ShoppingCart } from "lucide-react"
+import {
+  Cog,
+  Droplets,
+  Lightbulb,
+  Minus,
+  Package,
+  Plus,
+  Search,
+  ShieldCheck,
+  ShoppingCart,
+  Zap,
+  type LucideIcon,
+} from "lucide-react"
 import { useMemo, useState } from "react"
 
 import { Badge } from "@/components/ui/badge"
@@ -18,6 +30,14 @@ import type { ReplacementPart } from "@/features/parts/types"
 import { formatCurrency } from "@/lib/format"
 
 const ALL_CATEGORIES = "All Categories"
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  Hydraulics: Droplets,
+  Electrical: Zap,
+  Undercarriage: Cog,
+  Lighting: Lightbulb,
+  Safety: ShieldCheck,
+}
 
 export function PartsCatalogScreen() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -113,11 +133,12 @@ function PartCard({ part, onAdd }: PartCardProps) {
     setQuantity(1)
   }
 
+  const CategoryIcon = CATEGORY_ICONS[part.category] ?? Package
   return (
-    <article className="bg-card border-border/60 group flex flex-col rounded-xl border p-4 shadow-sm transition-shadow hover:shadow-md">
+    <article className="bg-card border-border/60 group flex flex-col rounded-xl border p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
       <div className="flex gap-4">
         <div className="bg-accent text-brand grid size-20 shrink-0 place-items-center rounded-lg">
-          <Package className="size-8" />
+          <CategoryIcon className="size-8" />
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
@@ -171,6 +192,7 @@ function PartCard({ part, onAdd }: PartCardProps) {
             </div>
             <Button
               size="field"
+              variant="brand"
               aria-label={`Add ${part.title}`}
               onClick={handleAdd}
               className="flex-1"

@@ -146,7 +146,12 @@ export function CartDrawer({
                 {formatCurrency(total)}
               </span>
             </div>
-            <Button size="field" className="w-full" onClick={handleSubmit}>
+            <Button
+              size="field"
+              variant="brand"
+              className="w-full"
+              onClick={handleSubmit}
+            >
               Submit request
             </Button>
           </SheetFooter>
